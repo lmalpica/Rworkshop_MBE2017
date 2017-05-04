@@ -1,0 +1,161 @@
+---
+title: "Intro to R for MBE2017"
+author: "Luis Malpica Cruz"
+date: "May 2, 2017"
+output: html_document
+---
+
+## Showing off R
+```{r}
+
+```
+
+
+
+## The basics
+ This is your working environment in R Studio, here you write, edit and save your code
+ The 'Console' space allows you to run your code and see R's output
+ The 'Environment' space is where R studio stores data files, variables and functions
+ The last space holds several tabs as follows:
+ 'Files' to see files in your current working directory
+ 'Plots' any plot code you run will appear here
+ 'Packages' shows those packages that you have installed and those loaded for your sesion
+ 'Help' when you need some guidance from specific packages and functions
+ 'Viewer' don't know, never used it...
+
+## Working with R
+```{r, eval = FALSE}
+# Operator '#'
+# anything after a '#' will not be read as an operating code by R
+
+# Some algebra in R####
+100+1
+2 * 6
+10 /      2
+log(10)
+
+# Help
+?
+?log
+help
+example
+citation
+
+# comparing numbers with logical symbols####
+1 < 2
+0 > 1
+1 != 2
+1 <= 2
+1 >= 1
+
+# store information using/making variables####
+x <- 5
+x
+cos(x)
+y <- 10*x
+y
+
+#challenge problem 1####
+#what will the following code return?
+x <- 1
+x <- x + 1 
+x
+
+# memory management####
+ls()
+x
+rm(x)
+x
+
+# Workspace functions 
+ls, exists, rm
+getwd, setwd
+install.packages, library
+
+# Always start by cleaning your working environment, 
+rm(list=ls())
+
+# Install and load packages
+install.packages("rmarkdown")
+library(rmarkdown)
+
+install.packages("ggplot2") #great plotting package
+library(ggplot2)
+
+# Some packages that will help us analyze and plot our data
+install.packages("scales")
+install.packages("MuMIn")
+library("scales")
+library("MuMIn")
+
+# Set your working directory
+getwd()
+setwd(dir = "/Users/Dudisimo/Documents/PhD/TAing/Rworkshop_MBE2017")
+
+# Loading some data
+barnacles <-read.csv("data/BarnacleData.csv", header=TRUE, sep=",", strip.white = TRUE) #remove the 'data/'
+
+# Figuring out data type
+str(barnacles)
+head(barnacles)
+names(barnacles)
+summary(barnacles)
+
+```
+
+```{r, eval = FALSE}
+# The first functions to learn
+str
+
+# Important operators and assignment
+%in%
+$, [, [[, head, tail, subset
+
+# Comparison 
+!=, ==, >, >=, <, <=
+is.na
+
+# Basic math
+*, +, -, /, ^
+abs
+ceiling, floor, round
+exp, log, log10, log2, sqrt
+
+max, min, prod, sum
+range
+mean, median, cor, sd, var
+
+# Logical & sets 
+&, |, !, xor
+all, any
+which
+
+# Vectors and matrices
+c, matrix
+length, dim, ncol, nrow
+cbind, rbind
+names, colnames, rownames
+
+# Making vectors 
+c
+rep, rep_len
+seq, seq_len, seq_along
+rev
+sample
+(is/as).(character/numeric/logical/...)
+
+# Lists & data.frames 
+list
+data.frame, as.data.frame
+expand.grid
+
+# Control flow 
+if
+for, while
+ifelse
+
+# Apply & friends
+lapply, sapply
+```
+
+
