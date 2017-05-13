@@ -5,13 +5,6 @@ date: "May 2, 2017"
 output: html_document
 ---
 
-## Showing off R
-```{r}
-
-```
-
-
-
 ## The basics
  This is your working environment in R Studio, here you write, edit and save your code
  The 'Console' space allows you to run your code and see R's output
@@ -36,8 +29,9 @@ log(10)
 
 # Help
 ?
-?log
 help
+# Challenge problem, find what do the next commands do:
+log
 example
 citation
 
@@ -55,7 +49,7 @@ cos(x)
 y <- 10*x
 y
 
-#challenge problem 1####
+#challenge problem####
 #what will the following code return?
 x <- 1
 x <- x + 1 
@@ -67,6 +61,82 @@ x
 rm(x)
 x
 
+# reading in data####
+cats <- read.table(file = "data/cats.txt", header=TRUE, sep=",")
+cats
+
+# manipulating data####
+cats$weight[1]
+cats$weight[2]
+cats$weight[1] + cats$weight[2]
+
+# challenge problem:####
+#what will the following print out and why?
+cats$weight[1] + cats$coat[2]
+
+#investigating data types####
+typeof(cats$weight[1])
+is(cats$weight[1])
+typeof(cats$coat[2])
+is(cats$coat[2])
+
+#5 main types of data in R:
+typeof(3.14)
+typeof(1L)
+typeof(1)
+typeof(TRUE)
+typeof(FALSE)
+typeof('SWC')
+typeof(1+1i)
+
+# introducing vectors####
+# Challenge, use typeof() to investigate the type of data contained in the vectors created
+x <- vector(length = 3)
+x
+x <- vector("character", length=3)
+x
+x <- c(2,3,6)
+x
+x <-c(2, 3,'6') 
+x
+x <- c('a', TRUE)
+x
+x <- c(0, TRUE)
+x
+
+#a few other ways of making simple vectors####
+x <- seq(10)
+x
+head(x, n=2)
+tail(x, n=4)
+length(x)
+x <- 1:4
+x
+names(x) <- c('a', 'b', 'c', 'd')
+x
+x[2]
+x['b']
+
+#investtigating structure####
+x <- 1:4
+str(x)
+cats
+str(cats$weight)
+str(cats$likes_string)
+str(cats)
+
+#introducing factors####
+str(cats$coat)
+coats = c('tabby', 'toirtoise', 'toirtoise', 'black', 'tabby')
+str(coats)
+CATegories <- factor(coats) #this groups data into categories
+str(CATegories)
+typeof(coats[1])
+typeof(CATegories[1]) #for R, these indices deep under are still numbers 
+
+```
+
+```{r}
 # Workspace functions 
 ls, exists, rm
 getwd, setwd
@@ -82,80 +152,65 @@ library(rmarkdown)
 install.packages("ggplot2") #great plotting package
 library(ggplot2)
 
+# Set your working directory
+getwd()
+setwd(dir = "/Users/Dudisimo/Documents/PhD/TAing/Rworkshop_MBE2017")
+
+#exploring real data
+gappy <- read.table(file = "data/gapminder-FiveYearData.csv", header=TRUE, sep=",", strip.white = TRUE)
+str(gappy)
+View(gappy)
+typeof(gappy)
+typeof(gappy$year)
+
+#plotting with baseplot
+plot(gappy$lifeExp,gappy$gdpPercap, blue)
+plot(gappy$gdpPercap,gappy$lifeExp)
+plot(gappy$year,gappy$gdpPercap)
+
+#plotting with ggplot####
+library(ggplot2)
+ggplot(data = gappy, aes(x = lifeExp, y = gdpPercap)) + geom_point()
+ggplot(data = gappy, aes(x = gdpPercap, y = lifeExp)) + geom_point()
+ggplot(data = gappy, aes(x = year, y = gdpPercap, color =continent)) + geom_point()
+
+ggplot(data = gappy, aes(x = year, y = gdpPercap, by=country, color =continent)) + geom_point() + geom_line()
+
+ggplot(data = gappy, aes(x = year, y = gdpPercap, by=country)) + geom_line(aes(color=continent))
+
+ggplot(data = subset(gappy, continent=="Africa"), aes(x = year, y = gdpPercap, by=country)) +
+  geom_line(aes(color=country))
+
+ggplot(data = subset(gappy, continent=="Africa" & gdpPercap>3000), aes(x = year, y = gdpPercap, by=country)) + 
+  geom_line(aes(color=country))
+
+```
+
+```{r}
+# Start by cleaning your working environment
+rm(list=ls())
+
+# Set your working directory
+getwd()
+setwd(dir = "/Users/Dudisimo/Documents/PhD/TAing/Rworkshop_MBE2017")
+
 # Some packages that will help us analyze and plot our data
 install.packages("scales")
 install.packages("MuMIn")
 library("scales")
 library("MuMIn")
 
-# Set your working directory
-getwd()
-setwd(dir = "/Users/Dudisimo/Documents/PhD/TAing/Rworkshop_MBE2017")
-
 # Loading some data
-barnacles <-read.csv("data/BarnacleData.csv", header=TRUE, sep=",", strip.white = TRUE) #remove the 'data/'
+barnacles <-read.csv("data/BarnacleData.csv", header=TRUE, sep=",", strip.white = TRUE) 
 
 # Figuring out data type
 str(barnacles)
 head(barnacles)
 names(barnacles)
 summary(barnacles)
+View(barnacles)
 
 ```
 
-```{r, eval = FALSE}
-# The first functions to learn
-str
-
-# Important operators and assignment
-%in%
-$, [, [[, head, tail, subset
-
-# Comparison 
-!=, ==, >, >=, <, <=
-is.na
-
-# Basic math
-*, +, -, /, ^
-abs
-ceiling, floor, round
-exp, log, log10, log2, sqrt
-
-max, min, prod, sum
-range
-mean, median, cor, sd, var
-
-# Logical & sets 
-&, |, !, xor
-all, any
-which
-
-# Vectors and matrices
-c, matrix
-length, dim, ncol, nrow
-cbind, rbind
-names, colnames, rownames
-
-# Making vectors 
-c
-rep, rep_len
-seq, seq_len, seq_along
-rev
-sample
-(is/as).(character/numeric/logical/...)
-
-# Lists & data.frames 
-list
-data.frame, as.data.frame
-expand.grid
-
-# Control flow 
-if
-for, while
-ifelse
-
-# Apply & friends
-lapply, sapply
-```
 
 
