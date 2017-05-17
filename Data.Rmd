@@ -1,7 +1,7 @@
 ---
 title: "Stats in R for MBE2017"
 author: "Luis Malpica Cruz"
-date: "May 12, 2017"
+date: "May 2017"
 output: 
   html_document:
     code_folding: hide
@@ -64,8 +64,7 @@ summary(cukes) #Basic summary stats on data
 plot(cukes)
 
 #Visualize categorical variables
-#These plots show continuous vs. categorical data as a box and whisker plot, 
-#where the middle line is the mean
+#These plots show continuous vs. categorical data as a box and whisker plot, where the middle line is the median and the whiskers represent the 25th and 75th lower and upper quartiles
 plot(cukes$orange_cukes ~ cukes$Depth)
 plot(cukes$orange_cukes ~ cukes$Students)
 
@@ -97,7 +96,7 @@ cukes_se <- summaryBy(orange_cukes ~ Depth, cukes, FUN=c(mean,sd,var))
 #View(cukes_se)
 
 # Error bars represent standard deviation
-ggplot(cukes_se, aes(x=Depth, y=orange_cukes.mean, fill=Depth)) + 
+ggplot(data=cukes_se, aes(x=Depth, y=orange_cukes.mean, fill=Depth)) + 
   geom_bar(position=position_dodge(), stat="identity") +
   geom_errorbar(aes(ymin=orange_cukes.mean-orange_cukes.sd, ymax=orange_cukes.mean+orange_cukes.sd),
                 width=.2,                    # Width of the error bars
@@ -201,7 +200,7 @@ which estimates two intercepts (b0 and b1) for each of our categories, and a slo
 #We can check our basic plot between continuous variables
 plot(cukes$rugosity, cukes$orange_cukes) 
 #And between our depth categories
-plot(cukes$orange_cukes ~ cukes$Students)
+plot(cukes$orange_cukes ~ cukes$Depth)
 
 cukemodel2 <- lm(orange_cukes ~ Depth + rugosity, data=cukes)
 par(mfrow = c(2,2)) #this tells R to set up a 2x2 grid of 4 plots
@@ -223,7 +222,7 @@ cukes$predicted2=predict(cukemodel2)
 #Plot of pretty plot
 ggplot(data=cukes, aes(x=rugosity, y=orange_cukes, color=Depth)) + 
   geom_point() +
-# stat_smooth(method = "lm", col = "blue", se = F) +
+  facet_wrap("Depth") +
   geom_line(aes(x = rugosity, y = predicted2)) +
   labs(y="Sea cucumber abundance") +
   labs(x="Rugosity") +

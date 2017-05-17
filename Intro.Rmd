@@ -1,7 +1,7 @@
 ---
 title: "Intro to R for MBE2017"
 author: "Luis Malpica Cruz"
-date: "May 2, 2017"
+date: "May 2017"
 output: html_document
 ---
 
@@ -31,9 +31,9 @@ log(10)
 ?
 help
 # Challenge problem, find what do the next commands do:
-log
-example
-citation
+?log
+help(example)
+help(citation)
 
 # Store information using/making variables####
 x <- 5
@@ -66,6 +66,7 @@ typeof(cats$weight[1])
 is(cats$weight[1])
 typeof(cats$coat[2])
 is(cats$coat[2])
+str(cats)
 
 # 5 main types of data in R####
 typeof(3.14)
@@ -76,16 +77,7 @@ typeof(FALSE)
 typeof('SWC')
 typeof(1+1i)
 
-# Investigating structure####
-x <- 1:4
-str(x)
-cats
-length(cats)
-head(cats)
-tail(cats)
-str(cats$weight)
-str(cats$likes_string)
-str(cats)
+#Why to know all these???
 
 ```
 
@@ -107,11 +99,6 @@ gappy <- read.table(file = "data/gapminder-FiveYearData.csv", header=TRUE, sep="
 str(gappy)
 typeof(gappy)
 typeof(gappy$year)
-
-# Plotting with baseplot ####
-plot(gappy$lifeExp,gappy$gdpPercap, blue)
-plot(gappy$gdpPercap,gappy$lifeExp)
-plot(gappy$year,gappy$gdpPercap)
 
 # Plotting with ggplot####
 ggplot(data = gappy, aes(x = lifeExp, y = gdpPercap)) + geom_point()
