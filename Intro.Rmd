@@ -35,52 +35,39 @@ log
 example
 citation
 
-# comparing numbers with logical symbols####
-1 < 2
-0 > 1
-1 != 2
-1 <= 2
-1 >= 1
-
-# store information using/making variables####
+# Store information using/making variables####
 x <- 5
 x
 cos(x)
 y <- 10*x
 y
 
-#challenge problem####
-#what will the following code return?
+# Challenge problem
+# What will the following code return?
 x <- 1
 x <- x + 1 
 x
 
-# memory management####
-ls()
-x
-rm(x)
-x
-
-# reading in data####
+# Reading and manipulating data####
 cats <- read.table(file = "data/cats.txt", header=TRUE, sep=",")
 cats
 
-# manipulating data####
+# Manipulating data
 cats$weight[1]
 cats$weight[2]
 cats$weight[1] + cats$weight[2]
 
-# challenge problem:####
+# Challenge problem:
 #what will the following print out and why?
 cats$weight[1] + cats$coat[2]
 
-#investigating data types####
+# Investigating data types####
 typeof(cats$weight[1])
 is(cats$weight[1])
 typeof(cats$coat[2])
 is(cats$coat[2])
 
-#5 main types of data in R:
+# 5 main types of data in R####
 typeof(3.14)
 typeof(1L)
 typeof(1)
@@ -89,87 +76,44 @@ typeof(FALSE)
 typeof('SWC')
 typeof(1+1i)
 
-# introducing vectors####
-# Challenge, use typeof() to investigate the type of data contained in the vectors created
-x <- vector(length = 3)
-x
-x <- vector("character", length=3)
-x
-x <- c(2,3,6)
-x
-x <-c(2, 3,'6') 
-x
-x <- c('a', TRUE)
-x
-x <- c(0, TRUE)
-x
-
-#a few other ways of making simple vectors####
-x <- seq(10)
-x
-head(x, n=2)
-tail(x, n=4)
-length(x)
-x <- 1:4
-x
-names(x) <- c('a', 'b', 'c', 'd')
-x
-x[2]
-x['b']
-
-#investtigating structure####
+# Investigating structure####
 x <- 1:4
 str(x)
 cats
+length(cats)
+head(cats)
+tail(cats)
 str(cats$weight)
 str(cats$likes_string)
 str(cats)
 
-#introducing factors####
-str(cats$coat)
-coats = c('tabby', 'toirtoise', 'toirtoise', 'black', 'tabby')
-str(coats)
-CATegories <- factor(coats) #this groups data into categories
-str(CATegories)
-typeof(coats[1])
-typeof(CATegories[1]) #for R, these indices deep under are still numbers 
-
 ```
 
+## Setting up an R session
 ```{r}
-# Workspace functions 
-ls, exists, rm
-getwd, setwd
-install.packages, library
-
-# Always start by cleaning your working environment, 
+# Start by cleaning your working environment####
 rm(list=ls())
 
-# Install and load packages
-install.packages("rmarkdown")
-library(rmarkdown)
-
+# Install and load packages####
 install.packages("ggplot2") #great plotting package
 library(ggplot2)
 
-# Set your working directory
+# Set your working directory####
 getwd()
 setwd(dir = "/Users/Dudisimo/Documents/PhD/TAing/Rworkshop_MBE2017")
 
-#exploring real data
+# Loading data into R (csv file) ####
 gappy <- read.table(file = "data/gapminder-FiveYearData.csv", header=TRUE, sep=",", strip.white = TRUE)
 str(gappy)
-View(gappy)
 typeof(gappy)
 typeof(gappy$year)
 
-#plotting with baseplot
+# Plotting with baseplot ####
 plot(gappy$lifeExp,gappy$gdpPercap, blue)
 plot(gappy$gdpPercap,gappy$lifeExp)
 plot(gappy$year,gappy$gdpPercap)
 
-#plotting with ggplot####
-library(ggplot2)
+# Plotting with ggplot####
 ggplot(data = gappy, aes(x = lifeExp, y = gdpPercap)) + geom_point()
 ggplot(data = gappy, aes(x = gdpPercap, y = lifeExp)) + geom_point()
 ggplot(data = gappy, aes(x = year, y = gdpPercap, color =continent)) + geom_point()
@@ -185,32 +129,3 @@ ggplot(data = subset(gappy, continent=="Africa" & gdpPercap>3000), aes(x = year,
   geom_line(aes(color=country))
 
 ```
-
-```{r}
-# Start by cleaning your working environment
-rm(list=ls())
-
-# Set your working directory
-getwd()
-setwd(dir = "/Users/Dudisimo/Documents/PhD/TAing/Rworkshop_MBE2017")
-
-# Some packages that will help us analyze and plot our data
-install.packages("scales")
-install.packages("MuMIn")
-library("scales")
-library("MuMIn")
-
-# Loading some data
-barnacles <-read.csv("data/BarnacleData.csv", header=TRUE, sep=",", strip.white = TRUE) 
-
-# Figuring out data type
-str(barnacles)
-head(barnacles)
-names(barnacles)
-summary(barnacles)
-View(barnacles)
-
-```
-
-
-
