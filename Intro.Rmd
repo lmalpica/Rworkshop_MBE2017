@@ -78,7 +78,7 @@ typeof('SWC')
 typeof(1+1i)
 
 #Why to know all these???
-
+#(A: inputing data into R)
 ```
 
 ## Setting up an R session
@@ -88,11 +88,52 @@ rm(list=ls())
 
 # Install and load packages####
 install.packages("ggplot2") #great plotting package
-library(ggplot2)
+install.packages("doBy")
+#install.packages("scales")
 
+library(ggplot2)
+library("doBy")
+library(scales) #The package scales is used to format the labels in percent
 # Set your working directory####
 getwd()
 setwd(dir = "/Users/Dudisimo/Documents/PhD/TAing/Rworkshop_MBE2017")
+
+# Loading data into R (csv file) ####
+i_data <- read.table(file = "data/i_data.csv", header=TRUE, sep=",", strip.white = TRUE)
+str(i_data)
+typeof(i_data)
+typeof(i_data$PetalLength)
+
+#Simple plot to assess data distribution, patterns, correlations, etc.
+plot(i_data)
+
+#Visualize categorical variables
+#These plots show continuous vs. categorical data as a box and whisker plot, where the middle line is the median and the whiskers represent the 25th and 75th lower and upper quartiles
+plot(i_data$SepalLength ~ i_data$Species)
+plot(i_data$PetalLength ~ i_data$Species)
+
+#The basic x ~ y plot for continuous variables
+plot(i_data$SepalLength, i_data$PetalLength) 
+plot(i_data$PetalLength, i_data$PetalWidth) 
+
+# Plotting with ggplot####
+ggplot(data = i_data, aes(x = PetalWidth, y = PetalLength)) + geom_point()
+ggplot(data = i_data, aes(x = PetalWidth, y = PetalLength, color = Species)) + geom_point()
+
+# Bar graph of the count of observations in each group :
+ggplot(i_data, aes(x=factor(1), fill=Species))+
+  geom_bar(width = 1)
+
+# Pie charts
+# Create the pie chart of the count of observations in each group :
+ggplot(i_data, aes(x=factor(1), fill=Species))+
+  geom_bar(width = 1)+
+  coord_polar("y") 
+
+ggplot(i_data, aes(x=factor(1), fill=Color))+
+  geom_bar(width = 1)+
+  coord_polar("y") +
+  theme_void() #this removes labels and axis
 
 # Loading data into R (csv file) ####
 gappy <- read.table(file = "data/gapminder-FiveYearData.csv", header=TRUE, sep=",", strip.white = TRUE)
